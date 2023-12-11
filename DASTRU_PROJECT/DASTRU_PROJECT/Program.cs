@@ -30,53 +30,61 @@ namespace DASTRU_FINAL_PROJECT
         again:
             ConsoleWriter.WriteHeader("DON MACCHIATOS", ConsoleColor.Cyan, 100);
             double totalPrice = 0;
-            string yn;
-
-            string productSelected = ProductSelection();
-            Console.Clear();
-            double quantity = SelectQuantity();
-            Console.Clear();
-
-            totalPrice += quantity * price[selectedItem];
-            string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
-
-            orderedItems.AddLast(productDetail);
-            Console.WriteLine(productDetail);
-
-            Console.WriteLine("Successfully added.\n[F1] Order again? \t [F2] Checkout? "); Console.CursorVisible = false;
-            yn = Console.ReadKey().KeyChar.ToString();
-
-            ConsoleKeyInfo consoleKey = Console.ReadKey();
-           if (consoleKey.Key == ConsoleKey.F1)
-           {
-                orderedItems.Clear(); Console.Clear();
-                goto again;
-           }
-           else if (consoleKey.Key == ConsoleKey.F2)
-           {
-                Console.WriteLine("All items to be checked out\n");
+       
+            Console.WriteLine("\n[F1] DISPLAY PRODUCTS \t\t[F2] EXIT]\n"); Console.CursorVisible = false;
+            var displayChoices = Console.ReadKey().KeyChar.ToString();
+            ConsoleKeyInfo consoleKey = Console.ReadKey(); string yn;
+            if (consoleKey.Key == ConsoleKey.F1)
+            {
+                Console.CursorVisible = true;
+                string productSelected = ProductSelection();
                 Console.Clear();
-                foreach (string item in orderedItems)
-                { Console.WriteLine(item); }
+                double quantity = SelectQuantity();
+                Console.Clear();
 
-                Console.WriteLine("\nTotal: " + totalPrice + " pesos");
-                Console.WriteLine("Successfully checkd out.");
-            cashEnter:
-                Console.CursorVisible=true;
-                Console.Write("\nPlease enter cash: ");
-                var cash = Convert.ToDouble(Console.ReadLine());
+                totalPrice += quantity * price[selectedItem];
+                string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
 
-                if (cash < totalPrice) { Console.WriteLine("Insufficient Cash", ConsoleColor.Red); Console.ReadKey(); goto cashEnter; }
-                else
+                orderedItems.AddLast(productDetail);
+                Console.WriteLine(productDetail);
+
+                Console.WriteLine("Successfully added.\n[F1] Order again? \t [F2] Checkout? "); Console.CursorVisible = false;
+                yn = Console.ReadKey().KeyChar.ToString();
+
+
+                if (consoleKey.Key == ConsoleKey.F1)
                 {
-                    PrintReceipt.printItems(productSelected, totalPrice, cash);
-                    Console.WriteLine("\n\nClick [Enter] to continue");
-                    Console.ReadKey();
+                    orderedItems.Clear(); Console.Clear();
                     goto again;
                 }
+                else if (consoleKey.Key == ConsoleKey.F2)
+                {
+                    Console.WriteLine("All items to be checked out\n");
+                    Console.Clear();
+                    foreach (string item in orderedItems)
+                    { Console.WriteLine(item); }
 
-                
+                    Console.WriteLine("\nTotal: " + totalPrice + " pesos");
+                    Console.WriteLine("Successfully checkd out.");
+                cashEnter:
+                    Console.CursorVisible = true;
+                    Console.Write("\nPlease enter cash: ");
+                    var cash = Convert.ToDouble(Console.ReadLine());
+
+                    if (cash < totalPrice) { Console.WriteLine("Insufficient Cash", ConsoleColor.Red); Console.ReadKey(); goto cashEnter; }
+                    else
+                    {
+                        PrintReceipt.printItems(productSelected, totalPrice, cash);
+                        Console.WriteLine("\n\nClick [Enter] to continue");
+                        Console.ReadKey();
+                        goto again;
+                    }
+
+
+                }
             }
+            else if (consoleKey.Key == ConsoleKey.F2) Environment.Exit(0);//Exit program
+
         }   
 
         static string ProductSelection()
