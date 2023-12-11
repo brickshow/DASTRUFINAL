@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Alcuino.ConsoleWriter_4_7</name>
+    </assembly>
+    <members>
+        <member name="T:Alcuino.ConsoleWriter472.Align">
+            <summary>
+            Specifies the alignment options for formatting.
+            </summary>
+        </member>
+        <member name="F:Alcuino.ConsoleWriter472.Align.Left">
+            <summary>
+            Aligns content to the left.
+            </summary>
+        </member>
+        <member name="F:Alcuino.ConsoleWriter472.Align.Center">
+            <summary>
+            Aligns content to the center.
+            </summary>
+        </member>
+        <member name="F:Alcuino.ConsoleWriter472.Align.Right">
+            <summary>
+            Aligns content to the right.
+            </summary>
+        </member>
+        <member name="T:Alcuino.ConsoleWriter472.ConsoleWriter">
+            <summary>
+            Provides static methods for writing formatted content to the console.
+            </summary>
+        </member>
+        <member name="F:Alcuino.ConsoleWriter472.ConsoleWriter.IsTypeWriterMode">
+            <summary>
+            Indicates whether the typewriter mode is enabled.
+            </summary>
+            <returns>True if the typewriter mode is enabled, false otherwise.</returns>
+            <remarks>
+            Determines whether the <see cref="M:Alcuino.ConsoleWriter472.ConsoleWriter.TypeWrite(System.String)"/> and <see cref="M:Alcuino.ConsoleWriter472.ConsoleWriter.TypeWriteLine(System.String)"/> methods simulate the typing of text on a typewriter. 
+            Setting this property to true introduces a randomized delay between each character being written to the console.
+            </remarks>
+        </member>
+        <member name="F:Alcuino.ConsoleWriter472.ConsoleWriter.TypeWriterSpeed">
+            <summary>
+            Specifies the speed of the typewriter effect in milliseconds.
+            </summary>
+            <value>The delay duration in milliseconds between each character being typed.</value>
+            <remarks>
+            The <see cref="F:Alcuino.ConsoleWriter472.ConsoleWriter.TypeWriterSpeed"/> property controls the delay between each character being written to the console when the typewriter mode is enabled. 
+            A higher value increases the delay, simulating slower typing, while a lower value decreases the delay, simulating faster typing.
+            </remarks>
+        </member>
+        <member name="F:Alcuino.ConsoleWriter472.ConsoleWriter.IsTypeWriterByWord">
+            <summary>
+            Indicates whether the typewriter effect is applied word by word.
+            </summary>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.Write(System.String,System.ConsoleColor,System.ConsoleColor)">
+            <summary>
+            Writes the specified value to the console with the specified foreground and background colors.
+            </summary>
+            <param name="value">The value to write to the console.</param>
+            <param name="foregroundColor">The color of the text. The default value is White.</param>
+            <param name="backgroundColor">The color of the background. The default value is Black.</param>
+            <remarks>
+            This method writes the specified value to the console, sets the foreground and background colors, and then resets the colors to the default values.
+            </remarks>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.WriteLine(System.String,System.ConsoleColor,System.ConsoleColor)">
+            <summary>
+            Writes the specified value followed by a newline to the console with the specified foreground and background colors.
+            </summary>
+            <param name="value">The value to write to the console.</param>
+            <param name="foregroundColor">The color of the text. The default value is White.</param>
+            <param name="backgroundColor">The color of the background. The default value is Black.</param>
+            <remarks>
+            This method writes the specified value to the console, sets the foreground and background colors, and then resets the colors to the default values. It also appends a newline character after the written value.
+            </remarks>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.WriteColumn(System.String[],Alcuino.ConsoleWriter472.Align,System.Int32,System.ConsoleColor,System.ConsoleColor)">
+            <summary>
+            Writes a column of text to the console with the specified alignment, maximum character width, and foreground and background colors.
+            </summary>
+            <param name="values">An array of strings to be displayed in the column.</param>
+            <param name="align">The alignment of the text within the column. The default value is Align.Left.</param>
+            <param name="maxChar">The maximum width of each column in characters. The default value is 8.</param>
+            <param name="foregroundColor">The color of the text. The default value is ConsoleColor.White.</param>
+            <param name="backgroundColor">The color of the background. The default value is ConsoleColor.Black.</param>
+            <remarks>
+            This method formats the provided text into a visually appealing column, taking into account the specified alignment, maximum character width, and foreground and background colors.
+            </remarks>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.WriteColumn(System.Collections.Generic.Dictionary{System.String,System.Int32},Alcuino.ConsoleWriter472.Align,System.ConsoleColor,System.ConsoleColor)">
+            <summary>
+            Writes a formatted column of values to the console.
+            </summary>
+            <param name="values">A dictionary containing string keys and integer values representing the column values and their maximum character lengths.</param>
+            <param name="align">Optional. Specifies the alignment of the column values (default: Align.Left).</param>
+            <param name="foregroundColor">Optional. Specifies the foreground color for the column (default: ConsoleColor.White).</param>
+            <param name="backgroundColor">Optional. Specifies the background color for the column (default: ConsoleColor.Black).</param>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.TypeWrite(System.String)">
+            <summary>
+            Writes the specified string to the console with a typewriter-like effect, simulating the delay between each character being typed.
+            </summary>
+            <param name="value">The string to write to the console.</param>
+            <remarks>
+            This method simulates the typing of text on a typewriter by introducing a randomized delay between each character being written to the console. The delay duration is controlled by the `TypeWriterSpeed` property.
+            </remarks>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.TypeWriteLine(System.String)">
+            <summary>
+            Writes the specified string followed by a newline to the console with a typewriter-like effect, simulating the delay between each character being typed and appending a newline character after the written text.
+            </summary>
+            <param name="value">The string to write to the console.</param>
+            <remarks>
+            This method simulates the typing of text on a typewriter by introducing a randomized delay between each character being written to the console and appending a newline character after the written text. The delay duration is controlled by the `TypeWriterSpeed` property.
+            </remarks>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.WriteHeader(System.String,System.ConsoleColor,System.ConsoleColor,System.Int32,System.String)">
+            <summary>
+            Writes a centered header to the console with the specified foreground and background colors, maximum character width, and border style.
+            </summary>
+            <param name="value">The header text to display.</param>
+            <param name="foregroundColor">The color of the header text. The default value is ConsoleColor.DarkYellow.</param>
+            <param name="backgroundColor">The color of the header background. The default value is ConsoleColor.Black.</param>
+            <param name="maxChar">The maximum width of the header in characters. The default value is 64.</param>
+            <param name="border">The border style to use around the header. The default value is "═".</param>
+            <remarks>
+            This method creates a visually appealing header by centering the text, applying the specified foreground and background colors, and drawing a border around the header using the provided border style.
+            </remarks>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.WriteHeader(System.String,System.ConsoleColor,System.Int32)">
+            <summary>
+            Writes a header value with specified formatting to the console.
+            </summary>
+            <param name="value">The header value to be written.</param>
+            <param name="foregroundColor">Optional. Specifies the foreground color for the header (default: ConsoleColor.White).</param>
+            <param name="maxChar">Optional. Specifies the maximum character length for the header (default: 64).</param>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.WriteHeader(System.String)">
+            <summary>
+            Writes a header value with default formatting to the console.
+            </summary>
+            <param name="value">The header value to be written.</param>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.WriteError(System.String)">
+            <summary>
+            Displays an error message to the console with a red background and prompts the user to press any key to continue.
+            </summary>
+            <param name="value">The error message to display.</param>
+            <remarks>
+            This method clears the console, displays a header with a red background indicating an error, presents the error message in red text, and prompts the user to press any key to continue.
+            </remarks>
+        </member>
+        <member name="M:Alcuino.ConsoleWriter472.ConsoleWriter.ReadLine(System.ConsoleColor)">
+            <summary>
+            Reads a line of input from the console and returns the input string.
+            </summary>
+            <param name="color">The color of the text prompt. The default value is ConsoleColor.White.</param>
+            <returns>The input string entered by the user.</returns>
+            <remarks>
+            This method prompts the user for input with the specified text color, reads the input line, and returns the input string. The method resets the console color to the default value after reading the input.
+            </remarks>
+        </member>
+    </members>
+</doc>
