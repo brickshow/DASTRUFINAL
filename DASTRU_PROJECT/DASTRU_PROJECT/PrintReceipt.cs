@@ -12,7 +12,7 @@ namespace DASTRU_PROJECT
     {
         string items { get; set; }
 
-        public static void printItems(string items, double price, double CASH)
+        public static void printItems(string items, double price, double CASH, double quantity)
         {
             Console.CursorVisible = true;
             ConsoleWriter.WriteHeader("DON MACCHIATOS", ConsoleColor.Cyan, 100);
@@ -26,7 +26,7 @@ namespace DASTRU_PROJECT
             for (int i = 0; i < printHeader.Length; i++)
             { 
                 Console.Write(printHeader.Substring(0, i + 1));
-                Thread.Sleep(50);
+                Thread.Sleep(40);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
             Console.WriteLine("\n");
@@ -36,18 +36,22 @@ namespace DASTRU_PROJECT
             for (int i = 0; i < printLine.Length; i++)
             {
                 Console.Write(printLine.Substring(0, i + 1));
-                Thread.Sleep(50);
+                Thread.Sleep(40);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
             Console.WriteLine();
-            
+
             //Print the items using substring
+
             for (int i = 0; i < items.Length; i++)
             {
                 Console.Write(items.Substring(0, i + 1));
-                Thread.Sleep(50);
+                Thread.Sleep(40);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
+
+
+
 
             string printPrice = price.ToString();
             //Print the price using substring
@@ -55,7 +59,7 @@ namespace DASTRU_PROJECT
             for (int i = 0; i < printPrice.Length; i++)
             {
                 Console.Write(printPrice.Substring(0, i + 1));
-                Thread.Sleep(50);
+                Thread.Sleep(40);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
             Console.WriteLine();
@@ -64,7 +68,7 @@ namespace DASTRU_PROJECT
             for (int i = 0; i < printLine.Length; i++)
             {
                 Console.Write(printLine.Substring(0, i + 1));
-                Thread.Sleep(50);
+                Thread.Sleep(40);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
             Console.WriteLine("\n\n");
@@ -74,7 +78,7 @@ namespace DASTRU_PROJECT
             for (int i = 0; i < totatAmount.Length; i++)
             {
                 Console.Write(totatAmount.Substring(0, i + 1));
-                Thread.Sleep(50);
+                Thread.Sleep(40);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
             Console.WriteLine();
@@ -84,7 +88,7 @@ namespace DASTRU_PROJECT
             for (int i = 0; i < totatCash.Length; i++)
             {
                 Console.Write(totatCash.Substring(0, i + 1));
-                Thread.Sleep(50);
+                Thread.Sleep(40);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
             Console.WriteLine();
@@ -95,7 +99,7 @@ namespace DASTRU_PROJECT
             for (int i = 0; i < Change.Length; i++)
             {
                 Console.Write(Change.Substring(0, i + 1));
-                Thread.Sleep(50);
+                Thread.Sleep(40);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
 

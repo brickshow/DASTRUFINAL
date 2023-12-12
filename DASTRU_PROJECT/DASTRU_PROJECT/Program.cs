@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Threading;
 using Alcuino.ConsoleWriter472;
 using DASTRU_PROJECT;
+using System.ComponentModel.Design;
 
 namespace DASTRU_FINAL_PROJECT
 {
@@ -28,62 +29,75 @@ namespace DASTRU_FINAL_PROJECT
         {
            
         again:
-            ConsoleWriter.WriteHeader("DON MACCHIATOS", ConsoleColor.Cyan, 100);
-            double totalPrice = 0;
-       
-            Console.WriteLine("\n[F1] DISPLAY PRODUCTS \t\t[F2] EXIT]\n"); Console.CursorVisible = false;
-            var displayChoices = Console.ReadKey().KeyChar.ToString();
-            ConsoleKeyInfo consoleKey = Console.ReadKey(); string yn;
-            if (consoleKey.Key == ConsoleKey.F1)
+            try
             {
-                Console.CursorVisible = true;
-                string productSelected = ProductSelection();
-                Console.Clear();
-                double quantity = SelectQuantity();
-                Console.Clear();
+                //Header
+                ConsoleWriter.WriteHeader("DON MACCHIATOS", ConsoleColor.Cyan, 100);
+                double totalPrice = 0;
 
-                totalPrice += quantity * price[selectedItem];
-                string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
-
-                orderedItems.AddLast(productDetail);
-                Console.WriteLine(productDetail);
-
-                Console.WriteLine("Successfully added.\n[F1] Order again? \t [F2] Checkout? "); Console.CursorVisible = false;
-                yn = Console.ReadKey().KeyChar.ToString();
-
-
+                Console.WriteLine("\n[F1] DISPLAY PRODUCTS \t\t[F2] EXIT]\n"); Console.CursorVisible = false;
+                var displayChoices = Console.ReadKey().KeyChar.ToString();
+                string yn;
+                ConsoleKeyInfo consoleKey = Console.ReadKey();//Key controlled option
                 if (consoleKey.Key == ConsoleKey.F1)
                 {
-                    orderedItems.Clear(); Console.Clear();
-                    goto again;
-                }
-                else if (consoleKey.Key == ConsoleKey.F2)
-                {
-                    Console.WriteLine("All items to be checked out\n");
-                    Console.Clear();
-                    foreach (string item in orderedItems)
-                    { Console.WriteLine(item); }
-
-                    Console.WriteLine("\nTotal: " + totalPrice + " pesos");
-                    Console.WriteLine("Successfully checkd out.");
-                cashEnter:
                     Console.CursorVisible = true;
-                    Console.Write("\nPlease enter cash: ");
-                    var cash = Convert.ToDouble(Console.ReadLine());
+                    string productSelected = ProductSelection();
+                    Console.Clear();
+                    double quantity = SelectQuantity();
+                    Console.Clear();
 
-                    if (cash < totalPrice) { Console.WriteLine("Insufficient Cash", ConsoleColor.Red); Console.ReadKey(); goto cashEnter; }
-                    else
+                    totalPrice += quantity * price[selectedItem];
+                    string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
+
+                    orderedItems.AddLast(productDetail);
+                Checkout:
+                    Console.WriteLine(productDetail);
+                   
+                    Console.WriteLine("\nSuccessfully added.\n\n[F3] Order again? \t [F4] Checkout? "); Console.CursorVisible = false;
+                    yn = Console.ReadKey().KeyChar.ToString();
+
+                    ConsoleKeyInfo ConsoleKeyNew = Console.ReadKey();
+
+                    if (ConsoleKeyNew.Key == ConsoleKey.F3)
                     {
-                        PrintReceipt.printItems(productSelected, totalPrice, cash);
-                        Console.WriteLine("\n\nClick [Enter] to continue");
-                        Console.ReadKey();
+                        orderedItems.Clear(); Console.Clear();
                         goto again;
                     }
+                    else if (ConsoleKeyNew.Key == ConsoleKey.F4)
+                    {
+                        Console.WriteLine("All items to be checked out\n");
+                        Console.Clear();
+                        foreach (string item in orderedItems)
+                        { Console.WriteLine(item); }
 
+                        Console.WriteLine("\nTotal: " + totalPrice + " pesos");
+                        Console.WriteLine("Successfully checkd out.");
+                    cashEnter:
+                        Console.CursorVisible = true;
+                        Console.Write("\nPlease enter cash: ");
+                        var cash = Convert.ToDouble(Console.ReadLine());
 
+                        if (cash < totalPrice) { Console.WriteLine("Insufficient Cash", ConsoleColor.Red); Console.ReadKey(); goto cashEnter; }
+                        else
+                        {
+                            PrintReceipt.printItems(productSelected, totalPrice, cash, quantity);
+                            Console.WriteLine("\n\nClick [Enter] to continue"); Console.CursorVisible=false;
+                            Console.ReadKey();
+                            goto again;
+                        }
+
+                    }
+                    else Console.WriteLine("INVALID KEY", ConsoleColor.Red); Console.ReadKey(); Console.Clear(); goto Checkout;
                 }
+                else if (consoleKey.Key == ConsoleKey.F2) Environment.Exit(0);//Exit program
+                else ConsoleWriter.WriteLine("INVALID KEY", ConsoleColor.Red); Console.ReadKey(); Console.Clear(); goto again;
             }
-            else if (consoleKey.Key == ConsoleKey.F2) Environment.Exit(0);//Exit program
+            catch
+            {
+                Console.WriteLine("INVALID KEY", ConsoleColor.Red);  Console.ReadKey(); Console.Clear(); goto again;
+            }
+            Console.ReadKey();
 
         }   
 
