@@ -51,6 +51,19 @@ namespace DASTRU_FINAL_PROJECT
                     string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
 
                     orderedItems.AddLast(productDetail);
+
+                    //View Cart
+                    Console.WriteLine("\nSuccessfully added.\n\n[F3] Order again? \t [F4] View Cart "); Console.CursorVisible = false;
+
+                    //New Console keys
+                    ConsoleKeyInfo keyView = Console.ReadKey();
+                    if (keyView.Key == ConsoleKey.F7)
+                    {
+                        Cart cart = new Cart(productDetail, price[selectedItem]);
+                        cart.DisplayCart();
+                    }
+
+
                 Checkout:
                     Console.WriteLine(productDetail);
                    
