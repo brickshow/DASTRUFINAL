@@ -12,9 +12,13 @@ namespace DASTRU_PROJECT
     {
         private string ItemsInCArt { get; set; }
 
-        public void DisplayCart(string item)
+        public Cart (string itemsInCArt)
         {
-            ItemsInCArt = item;
+            ItemsInCArt = itemsInCArt;
+        }
+
+        public void DisplayCart()
+        {
             Console.Clear();
             ConsoleWriter.WriteLine("Item In Cart\n");
             Console.WriteLine("==========================================");

@@ -27,7 +27,7 @@ namespace DASTRU_FINAL_PROJECT
         static int selectedItem;
         static void Main(string[] args)
         {
-            Cart cart = new Cart();//Declaring object
+            
 
         again:
             try
@@ -50,7 +50,7 @@ namespace DASTRU_FINAL_PROJECT
 
                     totalPrice += quantity * price[selectedItem];
                     string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
-
+                   // Cart cart = new Cart(productDetail);//Declaring object
                     orderedItems.AddLast(productDetail);
                     //Console.WriteLine(productDetail);
                     //View Cart
@@ -64,7 +64,7 @@ namespace DASTRU_FINAL_PROJECT
                         ConsoleKeyInfo keyView = Console.ReadKey();
                         if (keyView.Key == ConsoleKey.F7)
                         {
-                            cart.DisplayCart(orderedItems.First());
+                            cart.DisplayCart();
                             goto Checkout;
                         }
                         else if (keyView.Key == ConsoleKey.F6) goto again;
@@ -85,9 +85,11 @@ namespace DASTRU_FINAL_PROJECT
 
                     if (ConsoleKeyNew.Key == ConsoleKey.F3)
                     {
-                        cart.DisplayCart(orderedItems.First());
+                        orderedItems.RemoveLast(); 
+                        Console.WriteLine("Sucessfully removed");
                         Console.ReadKey();
-                        goto again;
+                        cart.DisplayCart();
+                       // goto again;
                     }
                     else if (ConsoleKeyNew.Key == ConsoleKey.F4)
                     {
