@@ -27,7 +27,8 @@ namespace DASTRU_FINAL_PROJECT
         static int selectedItem;
         static void Main(string[] args)
         {
-           
+            Cart cart = new Cart();//Declaring object
+
         again:
             try
             {
@@ -51,30 +52,41 @@ namespace DASTRU_FINAL_PROJECT
                     string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
 
                     orderedItems.AddLast(productDetail);
-
+                    //Console.WriteLine(productDetail);
                     //View Cart
-                    Console.WriteLine("\nSuccessfully added.\n\n[F3] Order again? \t [F4] View Cart "); Console.CursorVisible = false;
-
-                    //New Console keys
-                    ConsoleKeyInfo keyView = Console.ReadKey();
-                    if (keyView.Key == ConsoleKey.F7)
+                viewCart:    
+                    try
                     {
-                        Cart cart = new Cart(productDetail, price[selectedItem]);
-                        cart.DisplayCart();
+
+                        Console.WriteLine("\nSuccessfully added.\n\n[F6] Order again? \t [F7] View Cart "); Console.CursorVisible = false;
+
+                        //New Console keys
+                        ConsoleKeyInfo keyView = Console.ReadKey();
+                        if (keyView.Key == ConsoleKey.F7)
+                        {
+                            cart.DisplayCart(orderedItems.First());
+                            goto Checkout;
+                        }
+                        else if (keyView.Key == ConsoleKey.F6) goto again;
+                        else Console.WriteLine("INVALID KEY", ConsoleColor.Red); Console.ReadKey(); Console.Clear(); goto viewCart;
+
+                    }
+                    catch
+                    {
+                        Console.WriteLine("INVALID KEY", ConsoleColor.Red); Console.ReadKey(); Console.Clear(); goto viewCart;
                     }
 
-
                 Checkout:
-                    Console.WriteLine(productDetail);
-                   
-                    Console.WriteLine("\nSuccessfully added.\n\n[F3] Order again? \t [F4] Checkout? "); Console.CursorVisible = false;
+                      
+                    Console.WriteLine("\nSuccessfully added.\n\n[F3] Remove Item? \t [F4] Checkout? "); Console.CursorVisible = false;
                     yn = Console.ReadKey().KeyChar.ToString();
 
                     ConsoleKeyInfo ConsoleKeyNew = Console.ReadKey();
 
                     if (ConsoleKeyNew.Key == ConsoleKey.F3)
                     {
-                        orderedItems.Clear(); Console.Clear();
+                        cart.DisplayCart(orderedItems.First());
+                        Console.ReadKey();
                         goto again;
                     }
                     else if (ConsoleKeyNew.Key == ConsoleKey.F4)
@@ -108,7 +120,7 @@ namespace DASTRU_FINAL_PROJECT
             }
             catch
             {
-                Console.WriteLine("INVALID KEY", ConsoleColor.Red);  Console.ReadKey(); Console.Clear(); goto again;
+                Console.WriteLine("INVALID KEY!", ConsoleColor.Red);  Console.ReadKey(); Console.Clear(); goto again;
             }
             Console.ReadKey();
 

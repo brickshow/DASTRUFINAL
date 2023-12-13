@@ -1,28 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Alcuino.ConsoleWriter472;
 
 namespace DASTRU_PROJECT
 {
     internal class Cart
     {
         private string ItemsInCArt { get; set; }
-        private double priceInCart { get; set; }
 
-        public Cart(string item, double price)
+        public void DisplayCart(string item)
         {
-            this.ItemsInCArt = item;
-            this.priceInCart = price;
-        }
-
-        public string DisplayCart()
-        {
+            ItemsInCArt = item;
             Console.Clear();
-            Console.WriteLine("Item In Cart");
-            return this.ItemsInCArt;
+            ConsoleWriter.WriteLine("Item In Cart\n");
+            Console.WriteLine("==========================================");
+            Console.WriteLine(ItemsInCArt);
+            Console.WriteLine("==========================================");
         }
-
     }
 }
