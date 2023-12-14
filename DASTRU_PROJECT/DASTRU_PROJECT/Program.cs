@@ -50,21 +50,20 @@ namespace DASTRU_FINAL_PROJECT
 
                     totalPrice += quantity * price[selectedItem];
                     string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
-                   // Cart cart = new Cart(productDetail);//Declaring object
                     orderedItems.AddLast(productDetail);
+
                     //Console.WriteLine(productDetail);
                     //View Cart
                 viewCart:    
                     try
                     {
-
                         Console.WriteLine("\nSuccessfully added.\n\n[F6] Order again? \t [F7] View Cart "); Console.CursorVisible = false;
 
                         //New Console keys
                         ConsoleKeyInfo keyView = Console.ReadKey();
                         if (keyView.Key == ConsoleKey.F7)
                         {
-                            cart.DisplayCart();
+                            DisplayCart();
                             goto Checkout;
                         }
                         else if (keyView.Key == ConsoleKey.F6) goto again;
@@ -78,17 +77,26 @@ namespace DASTRU_FINAL_PROJECT
 
                 Checkout:
                       
-                    Console.WriteLine("\nSuccessfully added.\n\n[F3] Remove Item? \t [F4] Checkout? "); Console.CursorVisible = false;
+                    Console.WriteLine("\n\n[F3] Remove Item? \t [F4] Checkout? \t [F9] Add More Coffee"); Console.CursorVisible = false;
                     yn = Console.ReadKey().KeyChar.ToString();
 
                     ConsoleKeyInfo ConsoleKeyNew = Console.ReadKey();
 
                     if (ConsoleKeyNew.Key == ConsoleKey.F3)
                     {
-                        orderedItems.RemoveLast(); 
+                        //Console.Write("Select a number of item that you want to remove: ");
+                        //int removeItem = Convert.ToInt32(Console.ReadLine().ToString());
+
+
+                        //orderedItems.RemoveLast(); 
+                        RemoveProduct();
+
                         Console.WriteLine("Sucessfully removed");
                         Console.ReadKey();
-                        cart.DisplayCart();
+                        Console.Clear();
+                        DisplayCart();
+
+                        Console.WriteLine("");
                        // goto again;
                     }
                     else if (ConsoleKeyNew.Key == ConsoleKey.F4)
@@ -115,6 +123,8 @@ namespace DASTRU_FINAL_PROJECT
                         }
 
                     }
+
+                    else if (ConsoleKeyNew.Key == ConsoleKey.F9) goto again;
                     else Console.WriteLine("INVALID KEY", ConsoleColor.Red); Console.ReadKey(); Console.Clear(); goto Checkout;
                 }
                 else if (consoleKey.Key == ConsoleKey.F2) Environment.Exit(0);//Exit program
@@ -124,7 +134,7 @@ namespace DASTRU_FINAL_PROJECT
             {
                 Console.WriteLine("INVALID KEY!", ConsoleColor.Red);  Console.ReadKey(); Console.Clear(); goto again;
             }
-            Console.ReadKey();
+
 
         }   
 
@@ -158,6 +168,70 @@ namespace DASTRU_FINAL_PROJECT
             if (!int.TryParse(Console.ReadLine(), out int quantity) || quantity <= 0)
             { Console.Clear(); Console.WriteLine("Invalid, please try again."); return SelectQuantity(); }
             else { return quantity; }
+        }
+
+        static void DisplayCart()
+        {
+            Console.Clear();
+            if (orderedItems.Count == 0)
+            {
+                ConsoleWriter.WriteLine("Item In Cart\n");
+                Console.WriteLine("==========================================");
+                Console.WriteLine("Cart is EMPTY");
+                Console.WriteLine("==========================================");
+            }
+            else
+            {
+                ConsoleWriter.WriteLine("Item In Cart\n");
+                Console.WriteLine("==========================================");
+                int i = 1;
+                foreach (string item in orderedItems)
+                {
+                    Console.WriteLine("{0} ->  " + item, i++);
+                }
+                Console.WriteLine("==========================================");
+            }   
+        }
+
+        static void RemoveProduct()
+        {
+            Console.Write("\nEnter the coffee number you want to remove: ");
+            if (int.TryParse(Console.ReadLine(), out int indexToRemove))
+            {
+                try
+                {
+                    // Remove item at the specified index
+                    RemoveCoffe(orderedItems, indexToRemove);
+                }
+                catch (IndexOutOfRangeException ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid integer.");
+            }
+        }
+
+        // Method to remove an item from the linked list using a 1-based index
+        static void RemoveCoffe<T>(LinkedList<T> linkedList, int index)
+        {
+            if (index < 1 || index > linkedList.Count)
+            {
+                throw new IndexOutOfRangeException("Invalid index");//return errors
+            }
+
+            // Adjust the index to match the 0-based index of LinkedList<T>
+            int adjustedIndex = index - 1;
+
+            LinkedListNode<T> nodeToRemove = linkedList.First;
+            for (int i = 0; i < adjustedIndex; i++)
+            {
+                nodeToRemove = nodeToRemove.Next;
+            }
+
+            linkedList.Remove(nodeToRemove);
         }
     }
 }
