@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,8 +13,9 @@ namespace DASTRU_PROJECT
     {
         string items { get; set; }
 
-        public static void printItems(string items, double price, double CASH, double quantity)
+        public static void printItems(string items, double price, double CASH, double quantity, double priceItem)
         {
+            
             Console.CursorVisible = true;
             ConsoleWriter.WriteHeader("DON MACCHIATOS", ConsoleColor.Cyan, 100);
             
@@ -21,6 +23,8 @@ namespace DASTRU_PROJECT
             Console.WriteLine("Priting receipt....\n");
             string printHeader = "             DON MACCHIATOS            ";
             string printLine = "---------------------------------------";
+
+            
 
             //Print the header using substring
             for (int i = 0; i < printHeader.Length; i++)
@@ -41,14 +45,14 @@ namespace DASTRU_PROJECT
             }
             Console.WriteLine();
 
-            //Print the items using substring
+            ////Print the items using substring
 
-            for (int i = 0; i < items.Length; i++)
-            {
-                Console.Write(items.Substring(0, i + 1));
-                Thread.Sleep(40);
-                Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
-            }
+            //for (int i = 0; i < printItems.Length; i++)
+            //{
+            //    Console.Write(items.Substring(0, i + 1));
+            //    Thread.Sleep(40);
+            //    Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
+            //}
 
 
 

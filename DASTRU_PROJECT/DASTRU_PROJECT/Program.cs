@@ -24,6 +24,7 @@ namespace DASTRU_FINAL_PROJECT
         static double[] price = { 39.00, 39.00, 49.00, 59.00, 39.00, 39.00, 49.00, 59.00, 39.00, 39.00 };
 
         static LinkedList<string> orderedItems = new LinkedList<string>();
+        static LinkedList<double> orderedPrice = new LinkedList<double>();
         static int selectedItem;
         static void Main(string[] args)
         {
@@ -51,6 +52,7 @@ namespace DASTRU_FINAL_PROJECT
                     totalPrice += quantity * price[selectedItem];
                     string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
                     orderedItems.AddLast(productDetail);
+                    orderedPrice.AddLast(price[selectedItem]);
 
                     //Console.WriteLine(productDetail);
                     //View Cart
@@ -106,17 +108,17 @@ namespace DASTRU_FINAL_PROJECT
                         foreach (string item in orderedItems)
                         { Console.WriteLine(item); }
 
-                        Console.WriteLine("\nTotal: " + totalPrice + " pesos");
+                        Console.WriteLine("\nTotal: " + orderedPrice.Sum() + " pesos");
                         Console.WriteLine("Successfully checkd out.");
                     cashEnter:
                         Console.CursorVisible = true;
                         Console.Write("\nPlease enter cash: ");
                         var cash = Convert.ToDouble(Console.ReadLine());
 
-                        if (cash < totalPrice) { Console.WriteLine("Insufficient Cash", ConsoleColor.Red); Console.ReadKey(); goto cashEnter; }
+                        if (cash < orderedPrice.Sum()) { Console.WriteLine("Insufficient Cash", ConsoleColor.Red); Console.ReadKey(); goto cashEnter; }
                         else
                         {
-                            PrintReceipt.printItems(productSelected, totalPrice, cash, quantity);
+                            PrintReceipt.printItems(, totalPrice, cash, quantity, orderedPrice.Sum());
                             Console.WriteLine("\n\nClick [Enter] to continue"); Console.CursorVisible=false;
                             Console.ReadKey();
                             goto again;
