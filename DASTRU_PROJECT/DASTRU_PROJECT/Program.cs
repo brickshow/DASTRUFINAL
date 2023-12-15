@@ -8,6 +8,7 @@ using System.Threading;
 using Alcuino.ConsoleWriter472;
 using DASTRU_PROJECT;
 using System.ComponentModel.Design;
+using System.Security.Policy;
 
 namespace DASTRU_FINAL_PROJECT
 {
@@ -28,7 +29,7 @@ namespace DASTRU_FINAL_PROJECT
         static int selectedItem;
         static void Main(string[] args)
         {
-            
+            PrintReceipt print = new PrintReceipt();
 
         again:
             try
@@ -36,6 +37,7 @@ namespace DASTRU_FINAL_PROJECT
                 //Header
                 ConsoleWriter.WriteHeader("DON MACCHIATOS", ConsoleColor.Cyan, 100);
                 double totalPrice = 0;
+                double cash;
 
                 Console.WriteLine("\n[F1] DISPLAY PRODUCTS \t\t[F2] EXIT]\n"); Console.CursorVisible = false;
                 var displayChoices = Console.ReadKey().KeyChar.ToString();
@@ -45,20 +47,23 @@ namespace DASTRU_FINAL_PROJECT
                 {
                     Console.CursorVisible = true;
                     string productSelected = ProductSelection();
+                    
                     Console.Clear();
                     double quantity = SelectQuantity();
+                    double totalPrices = price[selectedItem] * quantity;
                     Console.Clear();
 
                     totalPrice += quantity * price[selectedItem];
                     string productDetail = productSelected + " " + quantity + " pcs: " + (quantity * price[selectedItem]) + " pesos";
                     orderedItems.AddLast(productDetail);
-                    orderedPrice.AddLast(price[selectedItem]);
+                    orderedPrice.AddLast(price[selectedItem] * quantity);
 
                     //Console.WriteLine(productDetail);
                     //View Cart
                 viewCart:    
                     try
                     {
+                        print.getItems(productSelected, totalPrice, orderedPrice.Sum());
                         Console.WriteLine("\nSuccessfully added.\n\n[F6] Order again? \t [F7] View Cart "); Console.CursorVisible = false;
 
                         //New Console keys
@@ -86,11 +91,6 @@ namespace DASTRU_FINAL_PROJECT
 
                     if (ConsoleKeyNew.Key == ConsoleKey.F3)
                     {
-                        //Console.Write("Select a number of item that you want to remove: ");
-                        //int removeItem = Convert.ToInt32(Console.ReadLine().ToString());
-
-
-                        //orderedItems.RemoveLast(); 
                         RemoveProduct();
 
                         Console.WriteLine("Sucessfully removed");
@@ -103,6 +103,7 @@ namespace DASTRU_FINAL_PROJECT
                     }
                     else if (ConsoleKeyNew.Key == ConsoleKey.F4)
                     {
+                        
                         Console.WriteLine("All items to be checked out\n");
                         Console.Clear();
                         foreach (string item in orderedItems)
@@ -113,12 +114,14 @@ namespace DASTRU_FINAL_PROJECT
                     cashEnter:
                         Console.CursorVisible = true;
                         Console.Write("\nPlease enter cash: ");
-                        var cash = Convert.ToDouble(Console.ReadLine());
+                        cash = Convert.ToDouble(Console.ReadLine());
+                        print.getCash(cash);
+
 
                         if (cash < orderedPrice.Sum()) { Console.WriteLine("Insufficient Cash", ConsoleColor.Red); Console.ReadKey(); goto cashEnter; }
                         else
                         {
-                            PrintReceipt.printItems(, totalPrice, cash, quantity, orderedPrice.Sum());
+                            print.printItems();
                             Console.WriteLine("\n\nClick [Enter] to continue"); Console.CursorVisible=false;
                             Console.ReadKey();
                             goto again;
@@ -165,7 +168,6 @@ namespace DASTRU_FINAL_PROJECT
 
         static double SelectQuantity()
         {
-         
             Console.Write("Enter quantity: ");
             if (!int.TryParse(Console.ReadLine(), out int quantity) || quantity <= 0)
             { Console.Clear(); Console.WriteLine("Invalid, please try again."); return SelectQuantity(); }

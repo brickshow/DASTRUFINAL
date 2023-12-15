@@ -11,11 +11,33 @@ namespace DASTRU_PROJECT
 {
     internal class PrintReceipt
     {
-        string items { get; set; }
+        //PrintItemInCart printI = new PrintItemInCart();
+        public string itemCart { get; set; }
+        string itemPrice { get; set; }
+        double itemQuantity { get; set; }
+        double itemCAsh { get; set; }
+        double totalPrice { get; set; }
 
-        public static void printItems(string items, double price, double CASH, double quantity, double priceItem)
+        static LinkedList<string> itemsList = new LinkedList<string>();
+        static LinkedList<double> itemsPrice = new LinkedList<double>();
+
+
+        public void getCash(double CASH)
         {
-            
+            itemCAsh = CASH;
+        }
+        public void getItems(string items, double price, double totalItem)
+        {
+            itemsList.AddLast(items);
+            itemsPrice.AddLast(price);
+           // this.itemPrice = price;
+           // this.itemCAsh = CASH;
+            this.totalPrice = totalItem;
+        }
+
+        public void printItems()
+        {
+
             Console.CursorVisible = true;
             ConsoleWriter.WriteHeader("DON MACCHIATOS", ConsoleColor.Cyan, 100);
             
@@ -24,7 +46,6 @@ namespace DASTRU_PROJECT
             string printHeader = "             DON MACCHIATOS            ";
             string printLine = "---------------------------------------";
 
-            
 
             //Print the header using substring
             for (int i = 0; i < printHeader.Length; i++)
@@ -45,26 +66,27 @@ namespace DASTRU_PROJECT
             }
             Console.WriteLine();
 
-            ////Print the items using substring
-
-            //for (int i = 0; i < printItems.Length; i++)
-            //{
-            //    Console.Write(items.Substring(0, i + 1));
-            //    Thread.Sleep(40);
-            //    Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
-            //}
-
-
-
-
-            string printPrice = price.ToString();
-            //Print the price using substring
-            Console.SetCursorPosition(35, 8);
-            for (int i = 0; i < printPrice.Length; i++)
+            //Print item using loop
+            foreach (string item in itemsList)
             {
-                Console.Write(printPrice.Substring(0, i + 1));
-                Thread.Sleep(40);
-                Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
+                foreach (char letter in item)
+                {
+                    Console.Write(letter);
+                    Thread.Sleep(50);
+                }
+                Console.WriteLine();
+                
+            }
+
+
+            int j = 0;
+           // Console.SetCursorPosition(38, 8);
+            //Print item using loop
+            foreach (double price in itemsPrice)
+            {
+                Console.SetCursorPosition(30, 8 + j++);
+                Console.Write(price);
+                Thread.Sleep(100);
             }
             Console.WriteLine();
 
@@ -72,13 +94,13 @@ namespace DASTRU_PROJECT
             for (int i = 0; i < printLine.Length; i++)
             {
                 Console.Write(printLine.Substring(0, i + 1));
-                Thread.Sleep(40);
+                Thread.Sleep(50);
                 Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
             }
             Console.WriteLine("\n\n");
 
             //Display the total price
-            string totatAmount = "Total Amount                      P " + printPrice;
+            string totatAmount = "Total Amount                      P " + totalPrice;
             for (int i = 0; i < totatAmount.Length; i++)
             {
                 Console.Write(totatAmount.Substring(0, i + 1));
@@ -88,7 +110,7 @@ namespace DASTRU_PROJECT
             Console.WriteLine();
 
             //Print total price
-            string totatCash = "Total Cash                        P " + CASH.ToString();
+            string totatCash = "Total Cash                        P " + itemCAsh.ToString();
             for (int i = 0; i < totatCash.Length; i++)
             {
                 Console.Write(totatCash.Substring(0, i + 1));
@@ -97,16 +119,15 @@ namespace DASTRU_PROJECT
             }
             Console.WriteLine();
 
-            //Print total price
-            CASH -= price;
-            string Change = "Change                            P " + CASH.ToString();
-            for (int i = 0; i < Change.Length; i++)
-            {
-                Console.Write(Change.Substring(0, i + 1));
-                Thread.Sleep(40);
-                Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
-            }
-
+            ////Print total price
+            //itemCAsh -= itemPrice;
+            //string Change = "Change                            P " + itemCAsh.ToString();
+            //for (int i = 0; i < Change.Length; i++)
+            //{
+            //    Console.Write(Change.Substring(0, i + 1));
+            //    Thread.Sleep(40);
+            //    Console.SetCursorPosition(Console.CursorLeft - (i + 1), Console.CursorTop);
+            //}
         }
     }
 }
